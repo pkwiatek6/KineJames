@@ -1,15 +1,10 @@
 <script lang="ts">
     import DotBar from "../Elements/DotBar.svelte";
-    import type { attributeContainer } from "../Data/Character";
+    import type { abilityContainer } from "../Data/Character";
     import { capitalize } from "../utils/Helpers";
 
     // Accept attributeContainer as a prop
-    export let Attributes: attributeContainer | null;
-
-    console.log("Attributes received:", Attributes);
-    console.log("Physical:", Attributes?.physical);
-    console.log("Social:", Attributes?.social);
-    console.log("Mental:", Attributes?.mental);
+    export let Abillities: abilityContainer | null;
 
     // Fallback for null groups
     const ensureMap = (
@@ -23,15 +18,26 @@
         }
         return new Map(); // Default to an empty map
     };
+        // Store user input for adding new entries
+        let newTalentKey = "";
+    let newSkillKey = "";
+    let newKnowledgeKey = "";
+
+    const addKeyValuePair = (map: Map<string, number>, key: string) => {
+        if (key.trim()) {
+            map.set(key.trim(), 0); // Add a new key with default value 0
+            key = ""; // Clear the input field
+        }
+    };
 </script>
 
 <div class="container">
-    {#if Attributes}
-        <!-- Physical Attributes -->
+    {#if Abillities}
+        <!-- Talents Abillities -->
         <div class="row">
             <div class="col">
                 <div class="h4">Physical</div>
-                {#each Array.from(ensureMap(Attributes.physical).entries()) as [name, value]}
+                {#each Array.from(ensureMap(Abillities.talents).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:
@@ -41,11 +47,11 @@
                 {/each}
             </div>
 
-            <!-- Social Attributes -->
+            <!-- Skill Abillities -->
 
             <div class="col">
                 <div class="h4">Social</div>
-                {#each Array.from(ensureMap(Attributes.social).entries()) as [name, value]}
+                {#each Array.from(ensureMap(Abillities.skills).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:
@@ -55,11 +61,11 @@
                 {/each}
             </div>
 
-            <!-- Mental Attributes -->
+            <!-- Knowledge Abillities -->
 
             <div class="col">
                 <div class="h4">Mental</div>
-                {#each Array.from(ensureMap(Attributes.mental).entries()) as [name, value]}
+                {#each Array.from(ensureMap(Abillities.knowledge).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:

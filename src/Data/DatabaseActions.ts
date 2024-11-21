@@ -1,21 +1,38 @@
-import mongoose from "mongoose";
-import CharacterModel from "./Char.model";
 
-export function run(){
+import type { ICharacter } from "./Character";
+
+export async function GetChar(name:string, userid:string){
+    const url = `http://localhost:8070/load/character/${name}/${userid}`
     try {
-        mongoose.connect("mongodb://localhost:27017")
-    } catch(e){
-        console.log(e.message)
+        let response = await fetch(url)
+
+        if (!response.ok) {
+            console.error(`Failed to fetch characters. Status: ${response.status}`)
+            return null
+        }
+        const char = await response.json()
+        console.log("Retrieved character:", char)
+        return {
+            ...char,
+            permwill: char.permwill ?? 0,
+            maxbloodpool: char.maxbloodpool ?? 0,
+            merits: char.merits ?? [],
+            flaw: char.flaw ?? [],
+        }
+    }catch (error) {
+        console.error("Error fetching character:", error);
+        return null;
     }
 }
 
+export async function GetAllChar(userid:string) {
+    const url = `http://localhost:8070/load/allnames/${userid}`
+    let response = await fetch(url)
+    let charNames = await response.json() as string[]
+    return charNames
+}
 
-export async function loadChar(disUser: string){
-    try {
-        console.log("Connecting to db")
-        const character = await CharacterModel.find({disUser : disUser})
-        console.log(character)
-    } catch (e) {
-        console.log(e.message)
-    }
+export async function UpdateChar(charData:ICharacter) {
+    
+    return charData
 }
