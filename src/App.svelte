@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Attributes from "./Blocks/Attributes.svelte";
 	import Abilities from "./Blocks/Abilities.svelte";
+	import Advantages from "./Blocks/Advantages.svelte";
 	import Info from "./Blocks/Info.svelte";
 	import Head from "./Blocks/Head.svelte";
 	import JamesNavbar from "./Blocks/JamesNavbar.svelte";
@@ -32,11 +33,11 @@
 			<Abilities
 				Abillities={characterData.abilities || defaultAbilityContainer}
 			/>
-			<!--div class="h1">Advantages</div>
-			<Attributes
-				Attributes={characterData.advantages ||
+			<div class="h1">Advantages</div>
+			<Advantages
+				Advantages={characterData.advantages ||
 					defaultAdvantagesContainer}
-			/-->
+			/>
 		{:catch error}
 			<div class="h1">
 				Something went wrong: {error?.message || "Unknown error"}

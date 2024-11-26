@@ -1,11 +1,11 @@
 <script lang="ts">
     import DotBar from "../Elements/DotBar.svelte";
     import { Button, Input } from "sveltestrap"; // Import sveltestrap components
-    import type { abilityContainer } from "../Data/Character";
+    import type { advantagesContainer } from "../Data/Character";
     import { capitalize } from "../utils/Helpers";
 
     // Accept attributeContainer as a prop
-    export let Abillities: abilityContainer | null;
+    export let Advantages: advantagesContainer | null;
 
     // Fallback for null groups
     const ensureMap = (
@@ -20,15 +20,15 @@
         return new Map(); // Default to an empty map
     };
     // Store user input for adding new entries
-    let newTalentKey = "";
-    let newSkillKey = "";
-    let newKnowledgeKey = "";
+    let newDisciplineKey = "";
+    let newBackgroundKey = "";
+    let newVirtuesKey = "";
 
     // Function to add a key-value pair and trigger reactivity
-    const addKeyValuePair = (category: keyof abilityContainer, key: string) => {
-        if (!Abillities || !key.trim()) return;
+    const addKeyValuePair = (category: keyof advantagesContainer, key: string) => {
+        if (!Advantages || !key.trim()) return;
 
-        const map = ensureMap(Abillities[category]);
+        const map = ensureMap(Advantages[category]);
 
         if (map.has(key)) {
             console.log(`Key "${key}" already exists in ${category}`);
@@ -38,25 +38,25 @@
         map.set(key.trim(), 0); // Add the new entry
 
         // Update the parent object to trigger reactivity
-        Abillities = {
-            ...Abillities,
+        Advantages = {
+            ...Advantages,
             [category]: new Map(map), // Reassign with a new Map reference
         };
 
-        console.log(`Added "${key}" to ${category}`, Abillities[category]);
-        if (category === "talents") newTalentKey = "";
-        if (category === "skills") newSkillKey = "";
-        if (category === "knowledge") newKnowledgeKey = "";
+        console.log(`Added "${key}" to ${category}`, Advantages[category]);
+        if (category === "disciplines") newDisciplineKey = "";
+        if (category === "backgrounds") newBackgroundKey = "";
+        if (category === "virtues") newVirtuesKey = "";
     };
 </script>
 
 <div class="container">
-    {#if Abillities}
-        <!-- Talents Abillities -->
+    {#if Advantages}
+        <!-- Disciplines Advantages -->
         <div class="row">
             <div class="col">
-                <div class="h4">Talents</div>
-                {#each Array.from(ensureMap(Abillities.talents).entries()) as [name, value]}
+                <div class="h4">Disciplines</div>
+                {#each Array.from(ensureMap(Advantages.Disciplines).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:
@@ -64,20 +64,20 @@
                         <DotBar {name} defaultSel={value ?? 0} />
                     </div>
                 {/each}
-                <!-- Add New Talent -->
+                <!-- Add New Discipline -->
                 <div class="row my-2">
                     <div class="input-group">
                         <Input
                             type="text"
-                            placeholder="New Talent"
-                            bind:value={newTalentKey}
+                            placeholder="New Discipline"
+                            bind:value={newDisciplineKey}
                             class="form-control"
                         />
 
                         <Button
                             color="success"
                             on:click={() =>
-                                addKeyValuePair("talents", newTalentKey)}
+                                addKeyValuePair("Disciplines", newDisciplineKey)}
                             class="input-group-append"
                         >
                             +
@@ -86,11 +86,11 @@
                 </div>
             </div>
 
-            <!-- Skill Abillities -->
+            <!-- Background Advantages -->
 
             <div class="col">
-                <div class="h4">Skill</div>
-                {#each Array.from(ensureMap(Abillities.skills).entries()) as [name, value]}
+                <div class="h4">Background</div>
+                {#each Array.from(ensureMap(Advantages.Backgrounds).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:
@@ -102,14 +102,14 @@
                     <div class="input-group">
                         <Input
                             type="text"
-                            placeholder="New Skill"
-                            bind:value={newSkillKey}
+                            placeholder="New Background"
+                            bind:value={newBackgroundKey}
                             class="form-control"
                         />
                         <Button
                             color="success"
                             on:click={() =>
-                                addKeyValuePair("skills", newSkillKey)}
+                                addKeyValuePair("Backgrounds", newBackgroundKey)}
                             class="input-group-append"
                         >
                             +
@@ -118,11 +118,11 @@
                 </div>
             </div>
 
-            <!-- Knowledge Abillities -->
+            <!-- Virtues Advantages -->
 
             <div class="col">
-                <div class="h4">Knowledge</div>
-                {#each Array.from(ensureMap(Abillities.knowledge).entries()) as [name, value]}
+                <div class="h4">Virtues</div>
+                {#each Array.from(ensureMap(Advantages.Virtues).entries()) as [name, value]}
                     <div class="row">
                         <div id="btnGroupAddon">
                             {capitalize(name)}:
@@ -134,14 +134,14 @@
                     <div class="input-group">
                         <Input
                             type="text"
-                            placeholder="New Knowledge"
-                            bind:value={newKnowledgeKey}
+                            placeholder="New Virtues"
+                            bind:value={newVirtuesKey}
                             class="form-control"
                         />
                         <Button
                             color="success"
                             on:click={() =>
-                                addKeyValuePair("knowledge", newKnowledgeKey)}
+                                addKeyValuePair("Virtues", newVirtuesKey)}
                             class="input-group-append"
                         >
                             +

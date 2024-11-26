@@ -6,7 +6,7 @@
  * @returns The capitalized string.
  */
 export const capitalize = (key: string): string => {
-    console.log("Capitalizing:", key); // Add a log for debugging
+ //   console.log("Capitalizing:", key); // Add a log for debugging
     if (!key) return key; // Handle empty strings
     return key.charAt(0).toUpperCase() + key.slice(1);
 };

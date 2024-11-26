@@ -139,3 +139,31 @@ export const defaultAdvantagesContainer: advantagesContainer = {
         ["courage", 0],
     ]),
 };
+
+export const defaultRollHistory: RollHistory = {
+	rolls: [],
+	dc: 0,
+	reason: 'No reason provided',
+}
+
+export const createDefaultCharacter = (): ICharacter => ({
+    user: '',
+    name: '',
+    disUser: '',
+    fudgeRoll: 0,
+    nature: '',
+    clan: '',
+    demeanor: '',
+    attributes: defaultAttributeContainer,
+    abilities: defaultAbilityContainer,
+    advantages: defaultAdvantagesContainer,
+    merits: [],
+    flaw: [],
+    path: 0,
+    permwill: 0,
+    willpower: 0,
+    maxbloodpool: 0,
+    bloodpool: 0,
+    health: 0,
+    lastRoll: defaultRollHistory,
+});
